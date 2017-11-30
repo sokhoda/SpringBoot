@@ -2,13 +2,13 @@ package repository;
 
 import businessdomain.Customer;
 import businessdomain.Orders;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import pizzaservice.states.State;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface OrderRepository extends CrudRepository<Orders, Long> {
+public interface OrderRepository extends JpaRepository<Orders, Long> {
     Orders find(Long id);
 
     List<Orders> findByCustomer(Customer customer);

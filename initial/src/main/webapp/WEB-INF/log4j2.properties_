@@ -1,0 +1,14 @@
+log4j.rootLogger.level = ERROR
+log4j.rootLogger = stdout, file
+
+property.filename = logs
+
+log4j.appender.stdout = org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.layout= org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern = [%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+
+log4j.appender.file = org.apache.log4j.RollingFileAppender
+log4j.appender.file.layout = org.apache.log4j.PatternLayout
+log4j.appender.file.File=${filename}/App.log
+log4j.appender.file.layout.ConversionPattern=[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+

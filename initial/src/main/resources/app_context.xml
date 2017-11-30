@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <import resource="classpath:repo_config.xml"/>
+
+    <util:properties id="properties" location="classpath:properties/misc.properties"/>
+
+    <context:component-scan base-package="businessdomain"/>
+    <context:component-scan base-package="pizzaservice"/>
+    <context:component-scan base-package="utils.parsers"/>
+    <context:component-scan base-package="validators"/>
+    <context:component-scan base-package="infrastructure.event.handling"/>
+    <context:component-scan base-package="quartz"/>
+
+    <!--Jobs-->
+    <!--JobDetail-->
+    <bean id="adminReportNotificationJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="quartz.AdminReportNotificationJob"/>
+        <property name="description" value="This is job notifying admin with email report of made orders during the last week"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="timeout" value="2"/>
+                <entry key="adminEmail" value="${admin_email}"/>
+                <entry key="orderService" value-ref="orderService"/>
+                <entry key="customMailService" value-ref="customMailServiceImpl"/>
+            </map>
+        </property>
+    </bean>
+    <!--Trigger-->
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="adminReportNotificationJob"/>
+        <property name="cronExpression" value="0 0 0 ? * FRI"/>
+    </bean>
+    <!--Scheduler-->
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="cronTrigger"/>
+            </list>
+        </property>
+    </bean>
+
+    <!--Validators-->
+    <!--Creates the JSR-303 Validator -->
+    <bean id="validatorFactory" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="messageInterpolator" ref="messageInterpolator"/>
+    </bean>
+
+    <bean id="messageInterpolator" class="org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator">
+        <constructor-arg index="0">
+            <bean class="org.hibernate.validator.resourceloading.PlatformResourceBundleLocator">
+                <constructor-arg index="0" value="properties.javax_validation.javax_validation_message"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean name="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>properties.spring_validation.message</value>
+            </list>
+        </property>
+    </bean>
+
+    <!--Email-->
+    <bean id="myJavaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${smtp.hostname}"/>
+        <property name="port" value="${smtp.port}"/>
+        <property name="username" value="${user_mail}"/>
+        <property name="password" value="${user_mail_password}"/>
+
+        <property name="javaMailProperties">
+           <props>
+               <prop key="mail.transport.protocol">${mail.transport.protocol}</prop>
+               <prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
+               <prop key="mail.smtp.starttls.enable">${mail.smtp.starttls.enable}</prop>
+               <prop key="mail.debug">${mail.debug}</prop>
+           </props>
+        </property>
+    </bean>
+
+    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+        <property name="velocityProperties">
+            <props>
+                <prop key="resource.loader">${resource.loader}</prop>
+                <prop key="class.resource.loader.class">${class.resource.loader.class}</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--Event notification/publisher-->
+    <bean id="distributedEventMulticaster" class="infrastructure.event.handling.DistributedEventMulticaster">
+        <property name="syncEventMulticaster">
+            <bean class="org.springframework.context.event.SimpleApplicationEventMulticaster"/>
+        </property>
+        <property name="asyncEventMulticaster">
+            <bean class="org.springframework.context.event.SimpleApplicationEventMulticaster">
+                <property name="taskExecutor">
+                    <bean class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor"/>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="orderStateCycle" scope="prototype" class="pizzaservice.states.OrderStateCycle">
+        <constructor-arg index="0" ref="newState"/>
+        <constructor-arg index="1" ref="inProgressState"/>
+        <constructor-arg index="2" ref="cancelledState"/>
+        <constructor-arg index="3" ref="doneState"/>
+    </bean>
+
+    <bean id="chequeProducer" class="pizzaservice.cheque.SimpleChequeProducer">
+        <lookup-method name="createNewCheque" bean="cheque"/>
+    </bean>
+    <bean name="orderService" class="pizzaservice.SimpleOrderService">
+        <lookup-method name="createNewOrder" bean="orders"/>
+        <lookup-method name="createNewOrderStateCycle" bean="orderStateCycle"/>
+    </bean>
+
+    <bean name="customerService" class="pizzaservice.SimpleCustomerService">
+        <lookup-method name="createNewCustomer" bean="customer"/>
+    </bean>
+    <!--File import-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver ">
+        <property name="maxUploadSize" value="5000000"/>
+        <property name="maxInMemorySize" value="3000000"/>
+    </bean>
+</beans>

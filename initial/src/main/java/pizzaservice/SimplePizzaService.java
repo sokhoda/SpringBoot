@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
-import repository.JPAPizzaRepo;
 import repository.PizzaRepository;
 import utils.parsers.CustomParser;
 
@@ -49,7 +48,7 @@ public class SimplePizzaService implements PizzaService {
 
     @Override
     public List<Pizza> findAll() {
-        return pizzaRepo.findAll();
+        return (List<Pizza>)pizzaRepo.findAll();
     }
 
     @Override
@@ -91,10 +90,6 @@ public class SimplePizzaService implements PizzaService {
         return new Pizza();
     }
 
-    public Pizza methodWithConstructor(Long id) {
-        PizzaRepository repo = new JPAPizzaRepo();
-        return repo.find(id);
-    }
 
     public Pizza privateMethodCaller() {
         return privateGetPizza(1L);

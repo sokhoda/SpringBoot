@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <mvc:annotation-driven conversion-service="conversionService"/>
+
+    <context:component-scan base-package="web.app"/>
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/pizza/**"/>
+            <bean id="debugLoggingInterceptor" class="web.app.interceptors.DebugLoggingInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <!--InternalResourceViewResolver-->
+    <mvc:view-resolvers>
+        <mvc:jsp prefix="/WEB-INF/jsp/"
+                 suffix=".jsp"
+                 view-class="org.springframework.web.servlet.view.JstlView"
+        />
+    </mvc:view-resolvers>
+
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="classpath:message"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+
+    <bean id="pizzaConverter" class="web.app.converters.PizzaConverter"/>
+    <bean id="conversionService"
+          class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <ref bean="pizzaConverter"/>
+                <bean class="web.app.converters.CustomerConverter"/>
+                <bean class="web.app.converters.OrderConverter"/>
+            </set>
+        </property>
+    </bean>
+
+    <bean id="myMappingExceptionResolver" class="web.infrastructure.MyMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <map>
+                <entry key="PizzaPriceException" value="errorPage"/>
+                <entry key="CustomerAddressException" value="addressErrorPage"/>
+                <entry key="IOException" value="errorPage"/>
+                <entry key="ViewNotFoundException" value="errorPage"/>
+            </map>
+        </property>
+        <property name="defaultErrorView" value="errorPage"/>
+        <property name="exceptionAttribute" value="ex"/>
+        <!-- Name of logger to use to log exceptions. Unset by default, so logging disabled -->
+    </bean>
+
+
+</beans>

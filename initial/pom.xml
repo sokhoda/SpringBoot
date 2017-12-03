@@ -5,6 +5,7 @@
 
     <groupId>org.springframework</groupId>
     <artifactId>gs-mysql-data</artifactId>
+    <packaging>jar</packaging>
     <version>0.1.1</version>
 
     <parent>
@@ -28,7 +29,7 @@
 
     <profiles>
         <profile>
-            <id>createDB</id>
+            <pizzaId>createDB</pizzaId>
             <build>
                 <plugins>
                     <plugin>
@@ -69,7 +70,7 @@
 
                         <executions>
                             <execution>
-                                <id>create-db</id>
+                                <pizzaId>create-db</pizzaId>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>execute</goal>
@@ -92,6 +93,11 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
@@ -100,6 +106,15 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
         </dependency>
 
         <!-- Use MySQL Connector-J -->
@@ -114,6 +129,8 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+
         <!-- https://mvnrepository.com/artifact/org.springframework.hateoas/spring-hateoas -->
         <dependency>
             <groupId>org.springframework.hateoas</groupId>

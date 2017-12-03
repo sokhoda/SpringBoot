@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Home</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Type</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="pizza : ${pizzalist}">
+        <td th:text="${pizza.pizzaId}">Id</td>
+        <td th:text="${pizza.name}">Name</td>
+        <td th:text="${pizza.price}">Price</td>
+        <td th:text="${pizza.type}">Type</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

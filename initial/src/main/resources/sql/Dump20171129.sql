@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `address`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `address` (
-  `id` bigint(20) NOT NULL,
+  `pizzaId` bigint(20) NOT NULL,
   `appNo` varchar(255) DEFAULT NULL,
   `buildingNo` varchar(255) DEFAULT NULL,
   `city` varchar(255) DEFAULT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE `address` (
   `type` varchar(255) DEFAULT NULL,
   `zipCode` varchar(255) DEFAULT NULL,
   `Cust_ID` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`pizzaId`),
   KEY `FKgo99edubu6rcsnqbtj38dh204` (`Cust_ID`),
   CONSTRAINT `FKgo99edubu6rcsnqbtj38dh204` FOREIGN KEY (`Cust_ID`) REFERENCES `customer` (`customerId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -56,11 +56,11 @@ DROP TABLE IF EXISTS `cheque`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cheque` (
-  `id` bigint(20) NOT NULL,
+  `pizzaId` bigint(20) NOT NULL,
   `date` datetime DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
   `totalSum` double DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`pizzaId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -95,7 +95,7 @@ CREATE TABLE `customer` (
   `streetName` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`customerId`),
   KEY `FKimdowhusaf02j60kd3oegiswp` (`LoyalCard_ID`),
-  CONSTRAINT `FKimdowhusaf02j60kd3oegiswp` FOREIGN KEY (`LoyalCard_ID`) REFERENCES `loyaltycard` (`id`)
+  CONSTRAINT `FKimdowhusaf02j60kd3oegiswp` FOREIGN KEY (`LoyalCard_ID`) REFERENCES `loyaltycard` (`pizzaId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -117,13 +117,13 @@ DROP TABLE IF EXISTS `discountrecord`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `discountrecord` (
-  `id` bigint(20) NOT NULL,
+  `pizzaId` bigint(20) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `sum` double DEFAULT NULL,
   `Cheque_ID` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`pizzaId`),
   KEY `FKcs54ddicxxuglkcns7vhh6vmi` (`Cheque_ID`),
-  CONSTRAINT `FKcs54ddicxxuglkcns7vhh6vmi` FOREIGN KEY (`Cheque_ID`) REFERENCES `cheque` (`id`)
+  CONSTRAINT `FKcs54ddicxxuglkcns7vhh6vmi` FOREIGN KEY (`Cheque_ID`) REFERENCES `cheque` (`pizzaId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -213,9 +213,9 @@ DROP TABLE IF EXISTS `loyaltycard`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `loyaltycard` (
-  `id` bigint(20) NOT NULL,
+  `pizzaId` bigint(20) NOT NULL,
   `sum` double DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`pizzaId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -267,7 +267,7 @@ CREATE TABLE `pizza_quant` (
   `PIZZA_ID` bigint(20) NOT NULL,
   PRIMARY KEY (`Ord_ID`,`PIZZA_ID`),
   KEY `FKpb3ao6h8b53ol0ep7my0ati5d` (`PIZZA_ID`),
-  CONSTRAINT `FK4q84akwhv9ul7c6al4h3r9gd2` FOREIGN KEY (`Ord_ID`) REFERENCES `tb_order` (`id`),
+  CONSTRAINT `FK4q84akwhv9ul7c6al4h3r9gd2` FOREIGN KEY (`Ord_ID`) REFERENCES `tb_order` (`pizzaId`),
   CONSTRAINT `FKpb3ao6h8b53ol0ep7my0ati5d` FOREIGN KEY (`PIZZA_ID`) REFERENCES `pizza` (`pizzaId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -290,14 +290,14 @@ DROP TABLE IF EXISTS `tb_order`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tb_order` (
-  `id` bigint(20) NOT NULL,
+  `pizzaId` bigint(20) NOT NULL,
   `curState` varchar(255) DEFAULT NULL,
   `CHEQUE_ID` bigint(20) DEFAULT NULL,
   `CUST_ID` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`pizzaId`),
   KEY `FKdhdkpgiinpxgafqe57p58s305` (`CHEQUE_ID`),
   KEY `FKhaljhbl5sqg9yt70blddck54x` (`CUST_ID`),
-  CONSTRAINT `FKdhdkpgiinpxgafqe57p58s305` FOREIGN KEY (`CHEQUE_ID`) REFERENCES `cheque` (`id`),
+  CONSTRAINT `FKdhdkpgiinpxgafqe57p58s305` FOREIGN KEY (`CHEQUE_ID`) REFERENCES `cheque` (`pizzaId`),
   CONSTRAINT `FKhaljhbl5sqg9yt70blddck54x` FOREIGN KEY (`CUST_ID`) REFERENCES `customer` (`customerId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

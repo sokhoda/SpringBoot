@@ -30,7 +30,7 @@ public class PizzaController {
         model.addAttribute(DomainHelper.PIZZALIST, pizzalist);
 //        model.addAttribute(DomainHelper.PIZZALIST_FOR_XML_MAPPING, pizzalist);
 //        return Routes.PIZZA_LIST_PAGE;
-        return "index";
+       return Routes.PIZZA_LIST_PAGE;
     }
 
     @RequestMapping("/")
@@ -55,7 +55,11 @@ public class PizzaController {
     }
 
     @RequestMapping(Routes.PIZZA_EDIT)
-    public String edit(@RequestParam Long pizzaId) {
+    public String edit(@RequestParam Long pizzaId, ModelMap model) {
+        Pizza pizza = pizzaService.find(pizzaId);
+        if (pizza != null) {
+            model.addAttribute(DomainHelper.PIZZA, pizza);
+        }
         return Routes.PIZZA_EDIT_PAGE;
     }
 

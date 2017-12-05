@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <title>Home</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+<div class="container-fluid bg-grey">
+    <h2>
+        List of Customers
+    </h2>
+    <h3>
+        <a href="/dashboard">&LongLeftArrow; back to Dashboard</a>
+    </h3>
+    <table class="table table-striped table-hover table-condensed " id="documenttab" style="width:95%;">
+        <thead>
+        <tr>
+            <th><h3>ID</h3></th>
+            <th><h3>Name</h3></th>
+            <th><h3>Email</h3></th>
+            <th><h3>LoyaltyCardId</h3></th>
+            <th><h3>Sum</h3></th>
+            <th><h3></h3></th>
+            <th><h3></h3></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="customer : ${customerlist}">
+            <td th:text="${customer.customerId}"></td>
+            <td align="left" id="row${customer.customerId}" th:text="${customer.name}"></td>
+            <td align="left" th:text="${customer.loyaltyCard.id}"></td>
+            <td align="left" th:text="${customer.loyaltyCard.sum}"></td>
+            <td>
+                <form action="../customer/edit" method="get">
+                    <input class="hidden" name="customerId" th:value="${customer.customerId}"/>
+                    <button type="submit" class="btn btn-primary btn-xs">Edit</button>
+                </form>
+            </td>
+            <td>
+                <form action="../pizza/remove" method="post">
+                    <input class="hidden" name="customerId" th:value="${customer.customerId}"/>
+                    <button type="submit" class="btn btn-warning btn-xs">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="text-center">
+        <a href="../customer/create">
+            <div class="btn-group">
+                <button type="button" id="crtupd" class="btn1  btn-default btn-lg btn-success">
+                    Create
+                </button>
+            </div>
+        </a>
+    </div>
+
+    <form action="/app/logout" method="post">
+        <button type="submit" class="btn btn-warning btn-xs">Log out</button>
+    </form>
+
+    <footer style="margin-top:10px; text-align: center">&copy;Alex, Kyiv, 2017</footer>
+
+</div>
+
+</body>
+</html>

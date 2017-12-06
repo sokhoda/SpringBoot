@@ -33,8 +33,9 @@
         <tr th:each="customer : ${customerlist}">
             <td th:text="${customer.customerId}"></td>
             <td align="left" id="row${customer.customerId}" th:text="${customer.name}"></td>
-            <td align="left" th:text="${customer.loyaltyCard.id}"></td>
-            <td align="left" th:text="${customer.loyaltyCard.sum}"></td>
+            <td align="left" th:text="${customer.email}"></td>
+            <td align="left" th:text="${customer.loyaltyCard != null} ? ${customer.loyaltyCard.id} : 'N/A'"></td>
+            <td align="left" th:text="${customer.loyaltyCard != null} ? ${customer.loyaltyCard.sum} : 'N/A'"></td>
             <td>
                 <form action="../customer/edit" method="get">
                     <input class="hidden" name="customerId" th:value="${customer.customerId}"/>

@@ -9,45 +9,78 @@
 <body>
 
 <form action="../customer/addnew" method="post" modelAttribute="customer" id="myForm">
-    <!--<input class="hidden" id="command" name="command" value="">-->
-    <!--<input class="hidden" id="Id" name="docId" value="">-->
 
     <div class="container-fluid bg-grey">
-        <h2>
-            Customer
-        </h2>
+        <div style="width: 60%; float: left">
+            <h2>
+                Customer
+            </h2>
 
-        <div class="form-group">
-            <label class="lb-lg">ID
-                <input class="form-control input-lg" th:value="${customer.customerId}" name="customerId"/>
-            </label>
-        </div>
+            <div class="form-group">
+                <label class="lb-sm">ID
+                    <input class="form-control input-sm" th:value="${customer.customerId}" name="customerId"/>
+                </label>
+            </div>
 
-        <div class="form-group">
-            <label class="lb-lg">Name
-                <input class="form-control input-lg" th:value="${customer.name}" name="name"/>
-            </label>
-        </div>
-        <div class="form-group">
-            <label class="lb-lg">Email
-                <input class="form-control input-lg" th:value="${customer.email}" name="email"/>
-            </label>
-        </div>
-        <div class="form-group">
-            <label class="lb-lg">LoyaltyCardId
-                <input class="form-control input-lg" th:value="${loyaltycard.id}" name="lcardId"/>
-            </label>
-        </div>
-        <div class="form-group">
-            <label class="lb-lg">Sum
-                <input class="form-control input-lg" th:value="${loyaltycard.sum}" name="lcardSum"/>
-            </label>
-        </div>
+            <div class="form-group">
+                <label class="lb-sm">Name
+                    <input class="form-control input-sm" th:value="${customer.name}" name="name"/>
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="lb-sm">Email
+                    <input class="form-control input-sm" th:value="${customer.email}" name="email"/>
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="lb-sm">LoyaltyCardId
+                    <input class="form-control input-sm"
+                           th:value="${customer.loyaltyCard != null} ? ${customer.loyaltyCard.id} : ''" name="lcardId"/>
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="lb-sm">Sum
+                    <input class="form-control input-sm"
+                           th:value="${customer.loyaltyCard != null} ? ${customer.loyaltyCard.sum} : ''" name="lcardSum"/>
 
-
+                </label>
+            </div>
+        </div>
+        <div style="width: 40%; float: right">
+            <div class="form-group">
+                <label class="lb-sm">zipCode
+                    <input class="form-control input-sm" th:value="${customer.address?.zipCode}" name="address.zipCode"/>
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="lb-sm">city
+                    <input class="form-control input-sm" th:value="${customer.address?.city}" name="address.city"/>
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="lb-sm">streetName
+                    <input class="form-control input-sm" th:value="${customer.address?.streetName}" name="address.streetName"/>
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="lb-sm">buildingNo
+                    <input class="form-control input-sm" th:value="${customer.address?.buildingNo}" name="address.buildingNo"/>
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="lb-sm">appNo
+                    <input class="form-control input-sm" th:value="${customer.address?.appNo}" name="address.appNo"/>
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="lb-sm">type
+                    <input class="form-control input-sm" th:value="${customer.address?.type}" name="address.type"/>
+                </label>
+            </div>
+        </div>
         <div class="text-center">
             <div class="btn-group">
-                <button type="button" id="crtupd" class="btn1 btn-default btn-lg btn-success"
+                <button type="button" id="crtupd" class="btn1 btn-default btn-sm btn-success"
                         onclick="$('#myForm').submit()">
                     Save
                 </button>

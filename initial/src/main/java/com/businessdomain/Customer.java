@@ -7,9 +7,10 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 import javax.xml.bind.annotation.XmlElement;
+import java.io.Serializable;
 
 @Entity
-public class Customer {
+public class Customer implements Serializable{
     private static final String EMAIL_PATTERN = ".+@.+\\.[a-z]+";
 
     @Id

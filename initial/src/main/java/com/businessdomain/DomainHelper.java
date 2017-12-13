@@ -6,12 +6,13 @@ public class DomainHelper {
     public static final String PIZZALIST = "pizzalist";
     public static final String PIZZALIST_FOR_XML_MAPPING = "pizzalistForXml";
 
-    public static final String PIZZA_ID = "PizzaId";
+    public static final String PIZZA_ID = "pizzaId";
     public static final String PIZZA_NAME = "Name";
     public static final String PIZZA_TYPE = "Type";
     public static final String PIZZA_PRICE = "Price";
 
     public static final String CUSTOMER = "customer";
+    public static final String CUSTOMER_ID = "customerId";
 
 
 //    order

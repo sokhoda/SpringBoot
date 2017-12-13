@@ -1,9 +1,10 @@
 package com.businessdomain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class Pizza {
+public class Pizza implements Serializable{
     @Id
     @TableGenerator(
             name = "pizzaGen",

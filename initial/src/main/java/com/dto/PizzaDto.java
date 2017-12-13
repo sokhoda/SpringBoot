@@ -1,13 +1,16 @@
 package com.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
+import org.springframework.hateoas.ResourceSupport;
 
-@Builder
+import java.io.Serializable;
 @Getter
-@ToString
-public class PizzaDto {
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class PizzaDto extends ResourceSupport implements Serializable {
+
+    private Long pizzaId;
     private String name;
     private String type;
     private Double price;

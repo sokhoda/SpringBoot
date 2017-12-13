@@ -1,13 +1,19 @@
 package com.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import com.businessdomain.Address;
+import lombok.*;
+import org.springframework.hateoas.ResourceSupport;
 
-@Builder
+import java.io.Serializable;
+
 @Getter
+@Setter
 @ToString
-public class CustomerDto {
+@AllArgsConstructor
+@NoArgsConstructor
+public class CustomerDto extends ResourceSupport implements Serializable {
+    private Long customerId;
     private String name;
     private String email;
+    private Address address;
 }

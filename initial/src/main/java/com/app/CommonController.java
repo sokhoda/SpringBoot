@@ -1,6 +1,8 @@
 package com.app;
 
+import com.businessdomain.Customer;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import com.service.LoginService;
@@ -18,4 +20,12 @@ public class CommonController {
     public ModelAndView redirectDashboard(ModelAndView modelAndView, HttpSession session) {
         return loginService.doUserLogin(session, modelAndView);
     }
+
+
+    @RequestMapping("/swagger_api")
+    public String toSwagger(Model model) {
+        return "dist/swagger-ui";
+    }
+
+
 }

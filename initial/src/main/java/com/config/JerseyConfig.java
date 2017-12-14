@@ -28,7 +28,7 @@ public class JerseyConfig extends ResourceConfig {
         register(SwaggerSerializers.class);
 
         BeanConfig config = new BeanConfig();
-        config.setTitle("Spring Boot + Jersey + Swagger + Docker Example");
+        config.setTitle("Spring Boot + Jersey + Swagger");
         config.setVersion("v1");
         config.setContact("Orlando L Otero");
         config.setSchemes(new String[] { "http", "https" });

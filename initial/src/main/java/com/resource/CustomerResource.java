@@ -5,6 +5,7 @@ import com.businessdomain.Customer;
 import com.businessdomain.DomainHelper;
 import com.dto.CustomerDto;
 import com.service.CustomerService;
+import io.swagger.annotations.Api;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -17,6 +18,7 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path(RestRoutes.CUSTOMERS)
+@Api(value = "Customer resource", produces = MediaType.APPLICATION_JSON)
 public class CustomerResource {
 
     @Inject

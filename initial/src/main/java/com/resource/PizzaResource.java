@@ -5,6 +5,7 @@ import com.businessdomain.DomainHelper;
 import com.businessdomain.Pizza;
 import com.dto.PizzaDto;
 import com.service.PizzaService;
+import io.swagger.annotations.Api;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -18,6 +19,7 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path(RestRoutes.PIZZAS)
+@Api(value = "Pizza resource", produces = "application/json")
 public class PizzaResource {
 
     @Inject

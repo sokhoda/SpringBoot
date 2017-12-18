@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Service("customerService")
-public class SimpleCustomerService implements CustomerService {
+public class CustomerServiceImpl implements CustomerService {
     public static final String USER_NAME = "userName";
     public static final String USER = "user";
 //    @Inject
@@ -37,11 +37,11 @@ public class SimpleCustomerService implements CustomerService {
 //    @Value("#{properties['customer.created.message']}")
 //    private String customerCreatedMessage;
 
-    public SimpleCustomerService(CustomerRepository customerRepo) {
+    public CustomerServiceImpl(CustomerRepository customerRepo) {
         this.customerRepo = customerRepo;
     }
 
-    public SimpleCustomerService() {
+    public CustomerServiceImpl() {
     }
 
     @Override
@@ -115,7 +115,7 @@ public class SimpleCustomerService implements CustomerService {
     @Transactional
     @Override
     public Customer placeNewCustomer(String name, Address address, LoyaltyCard loyaltyCard) {
-        Customer customer = createNewCustomer();
+        Customer customer = new Customer();
         customer.setName(name);
         customer.setAddress(address);
         customer.setLoyaltyCard(loyaltyCard);
@@ -126,11 +126,6 @@ public class SimpleCustomerService implements CustomerService {
     public void remove(Customer customer) {
         Assert.notNull(customer, "Customer should not be null");
         customerRepo.delete(customer);
-    }
-
-    Customer createNewCustomer() {
-        throw new IllegalStateException("Customer createNewCustomer method " +
-                "not overridden");
     }
 
     @Override

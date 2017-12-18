@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 public class Cheque implements Serializable {
@@ -57,6 +58,15 @@ public class Cheque implements Serializable {
 
     public Cheque(LocalDateTime date) {
         this(DEFAULT_TITLE, date);
+    }
+
+    public Cheque(Cheque cheque) {
+        if (cheque == null) {
+            return;
+        }
+        date = Optional.ofNullable(cheque.getDate()).orElse(null);
+        title = Optional.ofNullable(cheque.getTitle()).orElse(null);
+        totalSum = Optional.ofNullable(cheque.getTotalSum()).orElse(null);
     }
 
     @Override

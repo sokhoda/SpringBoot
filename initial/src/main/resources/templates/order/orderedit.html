@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<form action="../order/addnew" method="post" id="myForm">
+
+    <input class="hidden" id="orderedPizzaIds" name="orderedPizzaIds"/>
+
+    <div class="container-fluid bg-grey">
+        <h2>
+            Order
+        </h2>
+        <h3>
+            <a href="/dashboard">&LongLeftArrow; back to Dashboard</a>
+        </h3>
+        <table class="table table-striped table-hover table-condensed " id="documenttab" style="width:95%;">
+            <thead>
+            <tr>
+                <th><h3>Pizza Name</h3></th>
+                <th><h3>Type</h3></th>
+                <th><h3>Price</h3></th>
+                <th><h3>Quantity</h3></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="pizza : ${pizzas}">
+                <td align="left" id="row${pizza.pizzaId}" th:text="${pizza.name}"></td>
+                <td align="left" th:text="${pizza.type}"></td>
+                <td align="left" th:text="${pizza.price}"></td>
+                <td>
+                    <input style="text-align: right; max-width: 4em"
+                           class="form-control input-sm"
+                           th:id="'quantity'+ ${pizza.pizzaId}"
+                           th:value="0"/>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="text-center">
+            <div class="btn-group">
+                <button type="button" id="crtupd" class="btn1  btn-default btn-lg btn-success"
+                        th:onclick="'javascript:generateOrderedPizzaIdString()'">
+                    Complete Order
+                </button>
+            </div>
+        </div>
+        <footer style="margin-top:10px; text-align: center">&copy;Alex, Kyiv, 2017</footer>
+    </div>
+</form>
+
+<form action="/app/logout" method="post">
+    <button type="submit" class="btn btn-warning btn-xs">Log out</button>
+</form>
+
+</body>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function generateOrderedPizzaIdString() {
+        var ids = JSON.parse([[${pizzaIds}]]);
+        var arr = [];
+        console.log(ids.length);
+        for (var i = 0; i < ids.length; i++) {
+            var currCount = $('#quantity' + ids[i]).val();
+            arr.push(ids[i] + ',' + currCount);
+        }
+        $('#orderedPizzaIds').val(arr.join(';'));
+        $('#myForm').submit();
+    }
+    /*]]>*/
+</script>
+</html>

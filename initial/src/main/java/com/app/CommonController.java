@@ -1,11 +1,10 @@
 package com.app;
 
-import com.businessdomain.Customer;
+import com.service.LoginService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import com.service.LoginService;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;

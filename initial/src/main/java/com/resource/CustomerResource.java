@@ -6,6 +6,7 @@ import com.businessdomain.DomainHelper;
 import com.dto.CustomerDto;
 import com.service.CustomerService;
 import io.swagger.annotations.Api;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -19,6 +20,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @Path(RestRoutes.CUSTOMERS)
 @Api(value = "Customer resource", produces = MediaType.APPLICATION_JSON)
+@Slf4j
 public class CustomerResource {
 
     @Inject
@@ -26,9 +28,17 @@ public class CustomerResource {
     @Inject
     private CustomerService customerService;
 
+    @POST
+    @Path(RestRoutes.CREATE)
+    public Response addCustomer(Customer entity) {
+        Customer customer = customerService.save(entity);
+        return Response.ok(customer).status(Response.Status.CREATED).build();
+    }
+
     @GET
     public Response getAllCustomers() {
-        List<Customer> customerList  = customerService.findAll();
+        log.debug("get all customers");
+        List<Customer> customerList = customerService.findAll();
         List<CustomerDto> customerDtoList = customerAssembler.toResources(customerList);
         return Response.ok(customerDtoList).build();
     }

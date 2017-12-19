@@ -2,6 +2,10 @@ package com.businessdomain;
 
 import com.businessdomain.states.OrderStateCycle;
 import com.businessdomain.states.State;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
@@ -12,6 +16,10 @@ import java.util.TreeSet;
 
 @Entity
 @Table(name = "TB_ORDER")
+@Getter
+@Setter
+@EqualsAndHashCode
+@ToString
 public class Orders implements Serializable {
     @Id
     @TableGenerator(
@@ -23,7 +31,7 @@ public class Orders implements Serializable {
             initialValue = 0,
             allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "orderGen")
-    private Long id;
+    private Long orderId;
 
     @OneToOne(cascade = CascadeType.PERSIST, orphanRemoval = true)
     @JoinColumn(name = "CHEQUE_ID")
@@ -47,7 +55,7 @@ public class Orders implements Serializable {
     }
 
     public Orders(Long id, Customer customer, Map<Pizza, Integer> pizzaMap) {
-        this.id = id;
+        this.orderId = id;
         this.customer = customer;
         this.pizzaMap = pizzaMap;
     }
@@ -113,74 +121,5 @@ public class Orders implements Serializable {
 
     public void cancel() {
         orderStateCycle.setCurState(orderStateCycle.getCancelledSt());
-    }
-
-    @Override
-    public String toString() {
-        return "\nOrder{" +
-                "id=" + id +
-                ", cheque=" + cheque +
-                ",\ncustomer=" + customer +
-                ",\norderStateCycle=" + orderStateCycle +
-                ", pizzaMap=" + pizzaMap +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Orders order = (Orders) o;
-
-        if (cheque != null ? !cheque.equals(order.cheque) : order.cheque != null)
-            return false;
-        if (customer != null ? !customer.equals(order.customer) : order.customer != null)
-            return false;
-        if (pizzaMap != null ? !pizzaMap.equals(order.pizzaMap) : order.pizzaMap != null)
-            return false;
-        return orderStateCycle != null ? orderStateCycle.equals(order.orderStateCycle) : order.orderStateCycle == null;
-
-    }
-
-    public Cheque getCheque() {
-        return cheque;
-    }
-
-    public void setCheque(Cheque cheque) {
-        this.cheque = cheque;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Map<Pizza, Integer> getPizzaMap() {
-        return pizzaMap;
-    }
-
-    public void setPizzaMap(Map<Pizza, Integer> pizzaMap) {
-        this.pizzaMap = pizzaMap;
-    }
-
-
-    public void setOrderStateCycle(OrderStateCycle orderStateCycle) {
-        this.orderStateCycle = orderStateCycle;
-    }
-
-    public OrderStateCycle getOrderStateCycle() {
-        return orderStateCycle;
     }
 }

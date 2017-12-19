@@ -1,0 +1,30 @@
+  {
+        "orderId": 3,
+        "cheque": {
+            "id": 2,
+            "title": "Simple Pizza Cheque #",
+            "date": {
+                "dayOfMonth": 18,
+                "dayOfWeek": "MONDAY",
+                "dayOfYear": 352,
+                "month": "DECEMBER",
+                "monthValue": 12,
+                "year": 2017,
+                "hour": 2,
+                "minute": 53,
+                "nano": 164000000,
+                "second": 30,
+                "chronology": {
+                    "id": "ISO",
+                    "calendarType": "iso8601"
+                }
+            },
+            "totalSum": 1363,
+            "discountList": []
+        },
+        "customer": null,
+        "pizzaMap": {
+            "Pizza(pizzaId=3, name=Country, price=144.0, type=VEGETERIAN)": 3,
+            "Pizza(pizzaId=4, name=Mushroom, price=244.0, type=VEGETERIAN)": 4
+        },
+    }

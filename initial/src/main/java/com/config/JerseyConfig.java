@@ -1,6 +1,7 @@
 package com.config;
 
 import com.resource.CustomerResource;
+import com.resource.OrderResource;
 import com.resource.PizzaResource;
 import io.swagger.jaxrs.config.BeanConfig;
 import io.swagger.jaxrs.listing.ApiListingResource;
@@ -16,6 +17,7 @@ public class JerseyConfig extends ResourceConfig {
     public JerseyConfig() {
         register(PizzaResource.class);
         register(CustomerResource.class);
+        register(OrderResource.class);
     }
 
     @PostConstruct

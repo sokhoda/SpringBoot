@@ -1,10 +1,19 @@
 package com.businessdomain;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-public class Pizza implements Serializable{
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
+public class Pizza implements Serializable {
     @Id
     @TableGenerator(
             name = "pizzaGen",
@@ -37,37 +46,5 @@ public class Pizza implements Serializable{
     public Pizza(Long id, String name) {
         this.pizzaId = id;
         this.name = name;
-    }
-
-    public Long getPizzaId() {
-        return pizzaId;
-    }
-
-    public void setPizzaId(Long pizzaId) {
-        this.pizzaId = pizzaId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public PizzaType getType() {
-        return type;
-    }
-
-    public void setType(PizzaType type) {
-        this.type = type;
     }
 }

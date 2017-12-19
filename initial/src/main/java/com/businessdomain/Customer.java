@@ -1,7 +1,11 @@
 package com.businessdomain;
 
-import org.hibernate.validator.constraints.NotBlank;
 import com.validators.javax.CustomerCheck;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -10,7 +14,11 @@ import javax.xml.bind.annotation.XmlElement;
 import java.io.Serializable;
 
 @Entity
-public class Customer implements Serializable{
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
+public class Customer implements Serializable {
     private static final String EMAIL_PATTERN = ".+@.+\\.[a-z]+";
 
     @Id
@@ -61,62 +69,4 @@ public class Customer implements Serializable{
         this.name = name;
         this.loyaltyCard = loyaltyCard;
     }
-
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "id=" + customerId +
-                ", name='" + name + '\'' +
-                ", address=" + address +
-                ", loyaltyCard=" + loyaltyCard +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Customer customer = (Customer) o;
-
-        if (name != null ? !name.equals(customer.name) : customer.name != null)
-            return false;
-        if (address != null ? !address.equals(customer.address) : customer.address != null)
-            return false;
-        return loyaltyCard != null ? loyaltyCard.equals(customer.loyaltyCard) : customer.loyaltyCard == null;
-
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public Long getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Long id) {
-        this.customerId = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LoyaltyCard getLoyaltyCard() {
-        return loyaltyCard;
-    }
-
-    public void setLoyaltyCard(LoyaltyCard loyaltyCard) {
-        this.loyaltyCard = loyaltyCard;
-    }
-
 }

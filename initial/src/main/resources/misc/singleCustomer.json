@@ -1,0 +1,13 @@
+{  "customerId": null,
+   "name": "savedByJerseyCustomer",
+   "email": "some@comp.com",
+   "address": {
+    	    "zipCode": 	"02223",
+         	"city":  	"Strassburg",
+    		"streetName": "Lesya Ukr",
+    		"buildingNo": "34",
+    		"appNo": 	"43",
+    		"type": 	"OFFICE"
+   },
+   "loyaltyCard": null
+}

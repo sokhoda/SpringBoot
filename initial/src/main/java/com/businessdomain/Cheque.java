@@ -1,14 +1,11 @@
 package com.businessdomain;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.TableGenerator;
-import javax.persistence.Transient;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,6 +13,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Entity
+@Getter
+@Setter
+@EqualsAndHashCode
+@ToString
 public class Cheque implements Serializable {
     @Transient
     public static final String DEFAULT_TITLE = "Simple Pizza Cheque #";
@@ -69,33 +70,6 @@ public class Cheque implements Serializable {
         totalSum = Optional.ofNullable(cheque.getTotalSum()).orElse(null);
     }
 
-    @Override
-    public String toString() {
-        return "\nCheque{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", date=" + date +
-                ", discountList=" + discountList +
-                ", totalSum=" + totalSum +
-                ", dueSum=" + calcDueSum() +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Cheque cheque = (Cheque) o;
-
-        if (title != null ? !title.equals(cheque.title) : cheque.title != null)
-            return false;
-        if (totalSum != null ? !totalSum.equals(cheque.totalSum) : cheque.totalSum != null)
-            return false;
-        return discountList != null ? discountList.equals(cheque.discountList) : cheque.discountList == null;
-
-    }
-
     public Double getTotalSum() {
         return totalSum;
     }
@@ -115,40 +89,4 @@ public class Cheque implements Serializable {
         }
         return discountSum;
     }
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
-
-
-    public List<DiscountRecord> getDiscountList() {
-        return discountList;
-    }
-
-    public void setDiscountList(List<DiscountRecord> discountList) {
-        this.discountList = discountList;
-    }
-
-
 }

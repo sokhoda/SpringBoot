@@ -6,6 +6,7 @@ import com.businessdomain.Pizza;
 import com.dto.PizzaDto;
 import com.service.PizzaService;
 import io.swagger.annotations.Api;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -20,6 +21,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @Path(RestRoutes.PIZZAS)
 @Api(value = "Pizza resource", produces = MediaType.APPLICATION_JSON)
+@Slf4j
 public class PizzaResource {
 
     @Inject
@@ -27,8 +29,16 @@ public class PizzaResource {
     @Inject
     private PizzaService pizzaService;
 
+    @POST
+    @Path(RestRoutes.CREATE)
+    public Response addPizza(Pizza entity) {
+        Pizza pizza = pizzaService.save(entity);
+        return Response.ok(pizza).status(Response.Status.CREATED).build();
+    }
+
     @GET
     public Response getAllPizzas() {
+        log.info("Get all pizzas");
         List<Pizza> pizzaList  = pizzaService.findAll();
         List<PizzaDto> pizzaDtoList = pizzaAssembler.toResources(pizzaList);
         return Response.ok(pizzaDtoList).build();

@@ -12,7 +12,7 @@ public class Routes {
     //    order
 
     public static final String ORDER_EDIT_PAGE = "/order/orderedit";
-    public static final String ORDER_LIST_PAGE = "/order/orderslist";
+    public static final String ORDER_LIST_PAGE = "/order/orderlist";
     public static final String ORDER_CREATE = "/order/create";
     public static final String ORDER_ADDNEW = "/order/addnew";
     public static final String ORDERS_LIST = "/orders/list";

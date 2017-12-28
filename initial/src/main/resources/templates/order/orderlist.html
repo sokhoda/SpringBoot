@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <title>Home</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+<div class="container-fluid bg-grey">
+    <h2>
+        List of Orders
+    </h2>
+    <h3>
+        <a href="/dashboard">&LongLeftArrow; back to Dashboard</a>
+    </h3>
+    <table class="table table-striped table-hover table-condensed " id="documenttab" style="width:95%;">
+        <thead>
+        <tr>
+            <th><h3>OrderID</h3></th>
+            <th><h3>DateTime</h3></th>
+            <th><h3>Cheque Title</h3></th>
+            <th><h3>Customer Info</h3></th>
+            <th><h3>Order Items</h3></th>
+            <th><h3>Order Sum</h3></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orderslist}">
+            <div th:object="${order}">
+                <td th:text="*{orderId}"></td>
+                <td align="left" th:text="*{cheque.date}"></td>
+                <td align="left" th:text="*{cheque.title}"></td>
+                <td align="left" th:text="*{customer != null ? customer.name + ',' + customer.email: 'N/A'}"></td>
+                <td>
+                <ul>
+                    <li th:each="entry: ${order.pizzaMap}">
+                        <span th:text="${entry.key}"></span> x <span th:text="${entry.value}"></span> = <span th:text="${entry.key.price} * ${entry.value}"></span>
+                    </li>
+                </ul>
+                </td>
+            </div>
+            <td align="left" th:text="100"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="text-center">
+        <a href="../orders/create">
+            <div class="btn-group">
+                <button type="button" id="crtupd" class="btn1  btn-default btn-lg btn-success">
+                    Create
+                </button>
+            </div>
+        </a>
+    </div>
+
+    <form action="/app/logout" method="post">
+        <button type="submit" class="btn btn-warning btn-xs">Log out</button>
+    </form>
+
+    <footer style="margin-top:10px; text-align: center">&copy;Alex, Kyiv, 2017</footer>
+
+</div>
+
+</body>
+</html>

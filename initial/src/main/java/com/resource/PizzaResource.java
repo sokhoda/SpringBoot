@@ -27,7 +27,7 @@ public class PizzaResource {
     @Inject
     private PizzaAssembler pizzaAssembler;
     @Inject
-    private PizzaService pizzaService ;
+    private PizzaService pizzaService;
 
     @POST
     @Path(RestRoutes.CREATE)

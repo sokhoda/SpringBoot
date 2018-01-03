@@ -16,9 +16,7 @@ CREATE TABLE `customer` (
 `email` varchar(255) DEFAULT NULL,
 `name` varchar(255) DEFAULT NULL,
 `loyal_card_id` bigint(20) DEFAULT NULL,
-PRIMARY KEY (`customer_id`),
-KEY `FKfq4eepdl1jbed9dkx8r4qv04w` (`loyal_card_id`),
-CONSTRAINT `FKfq4eepdl1jbed9dkx8r4qv04w` FOREIGN KEY (`loyal_card_id`) REFERENCES `loyalty_card` (`id`)
+PRIMARY KEY (`customer_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `id_gen`;

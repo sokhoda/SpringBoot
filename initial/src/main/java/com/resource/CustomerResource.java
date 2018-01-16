@@ -28,6 +28,14 @@ public class CustomerResource {
     @Inject
     private CustomerService customerService;
 
+    @GET
+    @Path("/bynameandemail/{name}/{email}")
+    public Response getByNameAndEmail(@PathParam("name") String name, @PathParam("email") String email) {
+        return Response.ok(customerService.findByNameAndEmail(name,email))
+                .status(Response.Status.OK)
+                .build();
+    }
+
     @POST
     @Path(RestRoutes.CREATE)
     public Response addCustomer(Customer entity) {

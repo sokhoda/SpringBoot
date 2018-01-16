@@ -4,6 +4,7 @@ import com.businessdomain.Address;
 import com.businessdomain.Customer;
 import com.businessdomain.LoyaltyCard;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -18,6 +19,9 @@ import com.app.Routes;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+
+import static com.repository.specifications.CustomerSpecification.customerByEmail;
+import static com.repository.specifications.CustomerSpecification.customerByName;
 
 @Service("customerService")
 public class CustomerServiceImpl implements CustomerService {
@@ -95,6 +99,13 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer find(Long id) {
         return customerRepo.findOne(id);
+    }
+
+    @Override
+    public List<Customer> findByNameAndEmail(String name, String email) {
+        return customerRepo.findAll(
+                Specifications.where(customerByName(name)).and(customerByEmail(email))
+        );
     }
 
     @Override

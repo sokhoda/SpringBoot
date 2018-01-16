@@ -20,6 +20,8 @@ public interface CustomerService {
 
     List<Customer> findByName(String name);
 
+    List<Customer> findByNameAndEmail(String name, String email);
+
     List<Customer> findByLoyaltyCard(LoyaltyCard loyaltyCard);
 
     void delete(Customer customer);

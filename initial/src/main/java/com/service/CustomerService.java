@@ -3,12 +3,14 @@ package com.service;
 import com.businessdomain.Address;
 import com.businessdomain.Customer;
 import com.businessdomain.LoyaltyCard;
+import com.dto.CustomerDto;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public interface CustomerService {
@@ -28,6 +30,8 @@ public interface CustomerService {
 
     Customer placeNewCustomer(String name, Address address, LoyaltyCard
             loyaltyCard);
+
+    void calculateCustomerDto(@NotNull CustomerDto customerDto);
 
     void remove(Customer customer);
 

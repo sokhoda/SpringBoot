@@ -9,6 +9,8 @@ public class Routes {
     public static final String REDIRECT_DASHBOARD_PAGE = "redirect:../dashboard";
     public static final String DASHBOARD = "/dashboard";
 
+    public static final String VALIDATION = "/validation";
+
     //    order
 
     public static final String ORDER_EDIT_PAGE = "/order/orderedit";

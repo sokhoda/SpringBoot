@@ -1,5 +1,8 @@
 package com.app;
 
+import com.businessdomain.Customer;
+import com.dto.CustomerDto;
+import com.service.CustomerService;
 import com.service.LoginService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +18,9 @@ public class CommonController {
     @Inject
     private LoginService loginService;
 
+    @Inject
+    private CustomerService customerService;
+
     @RequestMapping(Routes.DASHBOARD)
     public ModelAndView redirectDashboard(ModelAndView modelAndView, HttpSession session) {
         return loginService.doUserLogin(session, modelAndView);
@@ -27,4 +33,13 @@ public class CommonController {
     }
 
 
+
+    @RequestMapping(Routes.VALIDATION)
+    public ModelAndView validationCheck(ModelAndView modelAndView) {
+
+        CustomerDto customerDto = CustomerDto.builder().build();
+        customerService.calculateCustomerDto(customerDto);
+
+            return modelAndView;
+    }
 }

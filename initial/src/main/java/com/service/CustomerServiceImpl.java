@@ -3,6 +3,9 @@ package com.service;
 import com.businessdomain.Address;
 import com.businessdomain.Customer;
 import com.businessdomain.LoyaltyCard;
+import com.businessdomain.Pizza;
+import com.dto.CustomerDto;
+import org.hibernate.validator.constraints.Email;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
@@ -15,10 +18,19 @@ import org.springframework.web.servlet.ModelAndView;
 import com.repository.CustomerRepository;
 import com.validators.javax.OrderedCustomerCheck;
 import com.app.Routes;
+import org.thymeleaf.util.StringUtils;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.util.List;
+import java.util.Set;
+
+import static java.util.stream.Collectors.toList;
 
 import static com.repository.specifications.CustomerSpecification.customerByEmail;
 import static com.repository.specifications.CustomerSpecification.customerByName;
@@ -27,6 +39,9 @@ import static com.repository.specifications.CustomerSpecification.customerByName
 public class CustomerServiceImpl implements CustomerService {
     public static final String USER_NAME = "userName";
     public static final String USER = "user";
+
+    private Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+
 //    @Inject
 //    CustomParser<CustomerDto> customerListParser;
 
@@ -131,6 +146,16 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setAddress(address);
         customer.setLoyaltyCard(loyaltyCard);
         return save(customer);
+    }
+
+    @Override
+    public void calculateCustomerDto(@NotNull CustomerDto customerDto) {
+        Set<ConstraintViolation<CustomerDto>> constraintViolations = validator.validate(customerDto);
+        if (constraintViolations.size() > 0) {
+            List<String> messages = constraintViolations.stream()
+                    .map(violation -> violation.getPropertyPath() + ", " +  violation.getMessage()).collect(toList());
+            throw new IllegalArgumentException("customerDto not valid: \n" + messages);
+        }
     }
 
     @Override

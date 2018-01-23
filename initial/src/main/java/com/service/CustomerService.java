@@ -31,7 +31,7 @@ public interface CustomerService {
     Customer placeNewCustomer(String name, Address address, LoyaltyCard
             loyaltyCard);
 
-    void calculateCustomerDto(@NotNull CustomerDto customerDto);
+    void calculateCustomerDto(CustomerDto customerDto);
 
     void remove(Customer customer);
 

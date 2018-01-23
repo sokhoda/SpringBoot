@@ -32,8 +32,6 @@ public class CommonController {
         return "dist/swagger-ui";
     }
 
-
-
     @RequestMapping(Routes.VALIDATION)
     public ModelAndView validationCheck(ModelAndView modelAndView) {
 

@@ -147,7 +147,8 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setLoyaltyCard(loyaltyCard);
         return save(customer);
     }
-
+    //@NotNull before method parameter is not working. Please do not put it like this.
+    // validator check`s only model field/properties/type validation annotations
     @Override
     public void calculateCustomerDto(@NotNull CustomerDto customerDto) {
         Set<ConstraintViolation<CustomerDto>> constraintViolations = validator.validate(customerDto);
